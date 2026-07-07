@@ -53,7 +53,6 @@ http://127.0.0.1:8890/api/request?user=test&q=8
 ```text
 flashSeconds=5
 line=按顺序打歌
-line=可能不打大歌
 line=点歌方式：点歌 曲名/别名/ID
 line=例如：点歌 皇帝
 ```
