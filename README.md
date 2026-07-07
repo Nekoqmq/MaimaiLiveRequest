@@ -1,9 +1,12 @@
 # MaimaiLiveRequestMod 安装与使用说明
-
 ## 截图
-![示例图片1]([https://example.com/image.png](https://github.com/Nekoqmq/MaimaiLiveRequest/imgs/1.png) "图片1")
-![示例图片2]([https://example.com/image.png](https://github.com/Nekoqmq/MaimaiLiveRequest/imgs/2.png) "图片2")
-![示例图片3]([https://example.com/image.png](https://github.com/Nekoqmq/MaimaiLiveRequest/imgs/3.png) "图片3")
+
+### **看板**
+![示例图片1](imgs/1.png)
+### **管理页面**
+![示例图片2](imgs/2.png)
+
+![示例图片3](imgs/3.png)
 ## 引言
 
 这是基于MelonLoader的maimai 直播间点歌 模组，可读取本地游戏曲库，支持本地点歌接口、B站弹幕点歌、`*可使用别名模糊点歌`、防重复点歌 、歌曲黑名单、自动切歌、管理员手动切歌和 OBS 点歌看板。
