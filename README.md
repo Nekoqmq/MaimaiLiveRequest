@@ -4,6 +4,7 @@
 ## 引言
 
 这是基于MelonLoader的maimai 直播间点歌 模组，可读取本地游戏曲库，支持本地点歌接口、B站弹幕点歌、`*可使用别名模糊点歌`、防重复点歌 、歌曲黑名单、自动切歌、管理员手动切歌和 OBS 点歌看板。
+
 本模组的 B 站弹幕点歌通过适配 [xfgryujk/blivechat](https://github.com/xfgryujk/blivechat) 的本地 WebSocket API 实现。
 
 ## 安装
@@ -41,9 +42,9 @@ http://127.0.0.1:8890/api/request?user=test&q=8
 
 ## OBS 看板
 ```text
-左侧：点歌队列，第一首作为 NEXT SONG 高光
+左侧：点歌队列，第一首作为 NEXT SONG 
 右上：正在游玩曲目 NOW PLAYING
-右下：独立颜色的点歌说明框，淡入淡出显示约 5 秒后切换到主播 logo，logo 停留同样时长后自动切回说明；logo 显示时隐藏框体
+右下：独立颜色的点歌说明框，淡入淡出显示约 5 秒后切换到图片，图片停留同样时长后自动切回说明
 中间：留空，用于放机台画面和游戏画面
 ```
 
@@ -69,7 +70,7 @@ logoScale=1
 
 `logoWidth/logoHeight` 是展示分辨率，`logoX/logoY` 是相对右下角的偏移，`logoScale` 是缩放倍率。可以在管理员页面“Logo”选项卡用滑条实时预览并保存。
 
-想显示主播logo或 自定义图片，把图片放到 `Mods` 目录，文件名使用：
+想显示主播logo或自定义图片，把图片放到 `Mods` 目录，文件名使用：
 
 ```text
 MaimaiLiveRequestLogo.png
@@ -118,6 +119,7 @@ Debug = false
 ```
 
 ## 别名和黑名单
+`*可使用别名模糊点歌`：曲目需要在别名表中才能被识别
 
 `MaimaiSongAliases.txt` 一行一个别名映射：
 
