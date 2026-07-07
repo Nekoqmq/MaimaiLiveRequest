@@ -122,6 +122,7 @@ Debug = false
 `*可使用别名模糊点歌`：曲目需要在别名表中才能被识别
 
 `MaimaiSongAliases.txt` 一行一个别名映射：
+MaimaiSongAliases.txt中已填写了一定的别名，可自行补充、修改、删除。
 
 ```text
 别名=正式曲名
