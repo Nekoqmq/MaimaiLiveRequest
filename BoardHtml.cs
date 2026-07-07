@@ -1,0 +1,108 @@
+namespace MaimaiLiveRequestMod
+{
+    internal static class BoardHtml
+    {
+        public const string DefaultHtml = @"<!doctype html>
+<html lang=""zh-CN"">
+<head>
+  <meta charset=""utf-8"">
+  <meta name=""viewport"" content=""width=device-width,initial-scale=1"">
+  <title>maimai live request board</title>
+  <style>
+    :root { --bg: rgba(8,13,15,.82); --panel: rgba(20,29,31,.86); --line: rgba(255,255,255,.16); --text: #f7f4ea; --muted: #aeb8b4; --hot: #ffdc5e; --cyan: #70e6f0; --green: #8cf0a4; --notice: #ff6b35; --notice2: #7c3aed; }
+    * { box-sizing: border-box; }
+    body { margin: 0; overflow: hidden; background: transparent; color: var(--text); font-family: ""Bahnschrift"", ""Microsoft YaHei UI"", sans-serif; }
+    .wrap { position: fixed; inset: 24px; pointer-events: none; }
+    .panel { pointer-events: auto; background: linear-gradient(150deg, var(--bg), var(--panel)); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 22px 56px rgba(0,0,0,.34); backdrop-filter: blur(6px); }
+    .queue { position: absolute; left: 0; top: 0; bottom: 0; width: min(390px, 28vw); padding: 18px; display: flex; flex-direction: column; }
+    .right-stack { position: absolute; right: 0; top: 0; width: min(420px, 30vw); display: grid; gap: 14px; }
+    .now { padding: 18px; border-color: rgba(255,220,94,.72); background: linear-gradient(145deg, rgba(50,43,18,.88), rgba(14,22,23,.82)); }
+    .notice { --logo-width: 172px; --logo-height: 156px; --logo-x: 0px; --logo-y: 0px; --logo-scale: 1; position: relative; min-height: 190px; padding: 16px; border-color: rgba(255,107,53,.72); background: linear-gradient(145deg, rgba(67,28,13,.92), rgba(24,15,39,.88)); overflow: visible; transition: background .55s ease, border-color .55s ease, box-shadow .55s ease; }
+    .notice-text { display: grid; gap: 8px; animation: noticeFade 2.6s ease-in-out infinite; transition: opacity .55s ease, transform .55s ease; will-change: opacity, transform; }
+    .notice-title { color: var(--notice); font-size: 15px; font-weight: 900; letter-spacing: .16em; }
+    .notice-line { padding: 8px 10px; border-left: 3px solid var(--notice2); border-radius: 8px; background: rgba(255,255,255,.07); font-size: 17px; font-weight: 800; line-height: 1.25; }
+    .notice-logo { position: absolute; right: 0; bottom: 0; width: var(--logo-width); height: var(--logo-height); display: flex; align-items: flex-end; justify-content: flex-end; opacity: 0; transform: translate(var(--logo-x), var(--logo-y)) scale(var(--logo-scale)); transform-origin: right bottom; transition: opacity .55s ease; pointer-events: none; }
+    .notice-logo img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 16px 26px rgba(0,0,0,.45)); }
+    .notice.show-logo { background: transparent; border-color: transparent; box-shadow: none; backdrop-filter: none; }
+    .notice.show-logo .notice-text { animation: none; opacity: 0; transform: translateY(-4px); }
+    .notice.show-logo .notice-logo { opacity: 1; transform: translate(var(--logo-x), var(--logo-y)) scale(var(--logo-scale)); }
+    @keyframes noticeFade { 0%, 100% { opacity: .68; transform: translateY(2px); } 45%, 55% { opacity: 1; transform: translateY(0); } }
+    .head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; color: var(--muted); font-size: 16px; letter-spacing: .08em; }
+    .count { color: var(--cyan); font-size: 24px; font-variant-numeric: tabular-nums; }
+    .list { display: grid; gap: 10px; overflow: hidden; }
+    .card { border: 1px solid rgba(255,255,255,.11); border-radius: 14px; background: rgba(255,255,255,.055); padding: 12px; }
+    .next { border-color: rgba(112,230,240,.68); background: linear-gradient(135deg, rgba(112,230,240,.17), rgba(140,240,164,.08)); }
+    .tag { color: var(--hot); font-size: 13px; letter-spacing: .12em; margin-bottom: 8px; }
+    .song { font-size: 22px; line-height: 1.15; font-weight: 800; overflow-wrap: anywhere; }
+    .now .song { font-size: 30px; }
+    .meta { margin-top: 7px; color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
+    .row { display: grid; grid-template-columns: 42px 1fr; gap: 10px; align-items: start; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.09); }
+    .rank { color: var(--green); font-size: 18px; text-align: right; font-variant-numeric: tabular-nums; }
+    .empty { color: var(--muted); padding: 18px 10px; text-align: center; border: 1px dashed rgba(255,255,255,.18); border-radius: 12px; }
+    @media (max-width: 1100px) {
+      .wrap { inset: 12px; }
+      .queue { width: 46vw; }
+      .right-stack { width: 46vw; }
+    }
+  </style>
+</head>
+<body>
+  <main class=""wrap"">
+    <section class=""queue panel"">
+      <div class=""head""><span>直播间点歌队列</span><span class=""count"" id=""count"">0</span></div>
+      <div class=""list"" id=""list""></div>
+    </section>
+    <div class=""right-stack"">
+      <section class=""now panel"" id=""now""></section>
+      <section class=""notice panel"" id=""notice"">
+        <!-- Logo default display size: 172x156 px. Adjust logoWidth/logoHeight/logoX/logoY/logoScale in MaimaiLiveRequestBoardNotice.txt or /admin settings. -->
+        <div class=""notice-text"" id=""noticeText""></div>
+        <div class=""notice-logo""><img id=""noticeLogo"" alt=""streamer logo""></div>
+      </section>
+    </div>
+  </main>
+  <script>
+    const listEl = document.getElementById('list'), nowEl = document.getElementById('now'), countEl = document.getElementById('count');
+    const noticeEl = document.getElementById('notice'), noticeTextEl = document.getElementById('noticeText'), noticeLogoEl = document.getElementById('noticeLogo');
+    let noticeTimer = 0;
+    function esc(s) { return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/""/g, '&quot;').replace(/'/g, '&#39;'); }
+    function song(r) { return `<div class=""song"">${esc(r.music.name)}</div><div class=""meta"">#${r.music.id} / ${esc(r.music.artist || '')}</div><div class=""meta"">点歌: ${esc(r.userName || '观众')}</div>`; }
+    function render(data) {
+      const queue = data.queue || [], playing = data.lastSelected;
+      countEl.textContent = queue.length;
+      nowEl.innerHTML = playing ? `<div class=""tag"">NOW PLAYING</div>${song(playing)}` : '<div class=""tag"">NOW PLAYING</div><div class=""empty"">等待开始游玩</div>';
+      if (!queue.length) { listEl.innerHTML = '<div class=""empty"">等待点歌</div>'; return; }
+      const first = `<div class=""card next""><div class=""tag"">NEXT SONG</div>${song(queue[0])}</div>`;
+      const rest = queue.slice(1, 9).map((r, i) => `<div class=""row""><div class=""rank"">${i + 2}</div><div>${song(r)}</div></div>`).join('');
+      listEl.innerHTML = first + rest;
+    }
+    async function tick() { try { const res = await fetch('/api/queue', { cache: 'no-store' }); render(await res.json()); } catch (_) {} }
+    function renderNotice(cfg) {
+      const lines = (cfg.lines && cfg.lines.length ? cfg.lines : ['按顺序打歌', '可能不打大歌', '点歌方式：点歌 曲名/别名/ID', '例如：点歌 皇帝']);
+      noticeTextEl.innerHTML = '<div class=""notice-title"">点歌说明</div>' + lines.map(x => `<div class=""notice-line"">${esc(x)}</div>`).join('');
+      const logo = cfg.logo || {}, num = (v, d) => Number.isFinite(Number(v)) ? Number(v) : d;
+      noticeEl.style.setProperty('--logo-width', Math.max(1, num(logo.width, 172)) + 'px');
+      noticeEl.style.setProperty('--logo-height', Math.max(1, num(logo.height, 156)) + 'px');
+      noticeEl.style.setProperty('--logo-x', num(logo.x, 0) + 'px');
+      noticeEl.style.setProperty('--logo-y', num(logo.y, 0) + 'px');
+      noticeEl.style.setProperty('--logo-scale', Math.max(.05, num(logo.scale, 1)));
+      noticeLogoEl.onload = () => { noticeLogoEl.dataset.resolution = `${noticeLogoEl.naturalWidth}x${noticeLogoEl.naturalHeight}`; noticeLogoEl.title = `logo source: ${noticeLogoEl.dataset.resolution}`; };
+      noticeLogoEl.src = cfg.logoUrl || '/api/notice-logo';
+      window.clearTimeout(noticeTimer);
+      const flashMs = Math.max(1, Number(cfg.flashSeconds) || 5) * 1000;
+      const showText = () => { noticeEl.classList.remove('show-logo'); noticeTimer = window.setTimeout(showLogo, flashMs); };
+      const showLogo = () => { noticeEl.classList.add('show-logo'); noticeTimer = window.setTimeout(showText, flashMs); };
+      showText();
+    }
+    async function loadNotice() {
+      try { const res = await fetch('/api/notice', { cache: 'no-store' }); renderNotice(await res.json()); }
+      catch (_) { renderNotice({ flashSeconds: 5, logoUrl: '/api/notice-logo', lines: [] }); }
+    }
+    loadNotice();
+    tick(); setInterval(tick, 1000);
+  </script>
+</body>
+</html>
+";
+    }
+}

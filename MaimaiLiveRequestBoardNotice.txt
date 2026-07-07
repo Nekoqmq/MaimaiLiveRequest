@@ -1,0 +1,12 @@
+# 直播看板“正在播放”下方提示配置
+# flashSeconds 控制提示闪烁多久后切换到本地 logo
+# logo 文件放在 Mods 同目录，文件名使用 MaimaiLiveRequestLogo.png/jpg/jpeg/webp/gif/svg
+flashSeconds=5
+logoWidth=172
+logoHeight=156
+logoX=0
+logoY=0
+logoScale=1
+line=按顺序打歌
+line=点歌方式：点歌 曲名/别名/ID
+line=例如：点歌 皇帝
