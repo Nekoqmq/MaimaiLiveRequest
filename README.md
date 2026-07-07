@@ -1,8 +1,11 @@
 # MaimaiLiveRequestMod 安装与使用说明
 ## 截图
 
+### **看板**
 ![示例图片1](imgs/1.png)
+### **管理页面**
 ![示例图片2](imgs/2.png)
+
 ![示例图片3](imgs/3.png)
 ## 引言
 
